@@ -120,7 +120,7 @@
 		tabindex="0"
 		on:click={() => fileInput.click()}
 		on:keydown={(e) => e.key === 'Enter' && fileInput.click()}
-		x-data="{ dragging: false }"
+		x-data="{ 'dragging': false }"
 		x-on:dragenter="dragging = true"
 		x-on:dragleave="dragging = false"
 		x-on:drop="dragging = false"
