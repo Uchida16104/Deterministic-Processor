@@ -112,20 +112,19 @@
 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
 	<h2 class="text-lg font-semibold text-gray-900 mb-4">Upload Data</h2>
 	
-	<div
-		class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary-400 transition-colors duration-200 cursor-pointer"
-		on:drop={handleDrop}
-		on:dragover={handleDragOver}
-		role="button"
-		tabindex="0"
-		on:click={() => fileInput.click()}
-		on:keydown={(e) => e.key === 'Enter' && fileInput.click()}
-		'x-data': '{ dragging: false }',
-		'x-on:dragenter': 'dragging = true',
-		'x-on:dragleave': 'dragging = false',
-		'x-on:drop': 'dragging = false',
-		'x-bind:class': "dragging ? 'border-primary-500 bg-primary-50' : ''"
-	>
+<div
+  class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-colors duration-200
+         {dragging ? 'border-primary-500 bg-primary-50' : ''}"
+  on:drop={(e) => { dragging = false; handleDrop(e); }}
+  on:dragover={handleDragOver}
+  on:dragenter={() => dragging = true}
+  on:dragleave={() => dragging = false}
+  role="button"
+  tabindex="0"
+  on:click={() => fileInput.click()}
+  on:keydown={(e) => e.key === 'Enter' && fileInput.click()}
+>
+
 		{#if $fileUploadState.isLoading}
 			<div class="flex flex-col items-center space-y-3">
 				<div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
