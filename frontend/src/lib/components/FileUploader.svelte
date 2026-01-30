@@ -4,6 +4,7 @@
 	import type { DataRow } from '../types';
 
 	let fileInput: HTMLInputElement;
+    let dragging = false;
 	let Alpine: any;
 
 	onMount(async () => {
