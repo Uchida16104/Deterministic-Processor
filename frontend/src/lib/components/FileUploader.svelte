@@ -120,11 +120,11 @@
 		tabindex="0"
 		on:click={() => fileInput.click()}
 		on:keydown={(e) => e.key === 'Enter' && fileInput.click()}
-		'x-data'='{ dragging: false }',
-		'x-on:dragenter'='dragging = true',
-		'x-on:dragleave'='dragging = false',
-		'x-on:drop'='dragging = false',
-		'x-bind:class'="dragging ? 'border-primary-500 bg-primary-50' : ''"
+		'x-data': '{ dragging: false }',
+		'x-on:dragenter': 'dragging = true',
+		'x-on:dragleave': 'dragging = false',
+		'x-on:drop': 'dragging = false',
+		'x-bind:class': "dragging ? 'border-primary-500 bg-primary-50' : ''"
 	>
 		{#if $fileUploadState.isLoading}
 			<div class="flex flex-col items-center space-y-3">
