@@ -26,7 +26,6 @@ pub async fn process_data(req: web::Json<ProcessRequest>) -> impl Responder {
     match pipeline.process(&req.data, &req.transformation_type, req.parameters.as_ref()) {
         Ok(result) => {
             let output_rows = result.len();
-            let input_rows = req.data.len();
 
             info!(
                 "Processing completed successfully, {} rows returned",
@@ -39,7 +38,7 @@ pub async fn process_data(req: web::Json<ProcessRequest>) -> impl Responder {
                 message: "Processing completed successfully".to_string(),
                 metadata: Some(serde_json::json!({
                     "transformation": req.transformation_type,
-                    "input_rows": input_rows,
+                    "input_rows": req.data.len(),
                     "output_rows": output_rows
                 })),
             })

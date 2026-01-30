@@ -1,4 +1,4 @@
-use log::{debug, error, info};
+use log::{debug, info};
 use serde_json::Value;
 use std::collections::{HashMap, HashSet};
 use thiserror::Error;
@@ -7,9 +7,6 @@ use thiserror::Error;
 pub enum CSharpBridgeError {
     #[error("Processing error: {0}")]
     ProcessingError(String),
-
-    #[error("Serialization error: {0}")]
-    SerializationError(String),
 
     #[error("Invalid response")]
     InvalidResponse,
@@ -35,16 +32,19 @@ impl CSharpBridge {
             transformation_type
         );
 
-        let json_data: Vec<Value> = data.iter().map(|row| Value::Object(row.clone().into())).collect();
+        let json_data: Vec<Value> = data
+            .iter()
+            .map(|row| Value::Object(row.iter().map(|(k, v)| (k.clone(), v.clone())).collect()))
+            .collect();
 
-        let param_map = parameters.map(|p| p.clone());
+        let param_map = parameters.cloned().unwrap_or_default();
 
-        let result = self.process_internal(&json_data, transformation_type, param_map.as_ref());
+        let processed = self.process_internal(&json_data, transformation_type, &param_map);
 
-        let output = result
+        let output = processed
             .into_iter()
             .filter_map(|v| v.as_object().cloned())
-            .map(HashMap::from)
+            .map(|m| m.into_iter().collect())
             .collect();
 
         Ok(output)
@@ -54,18 +54,15 @@ impl CSharpBridge {
         &self,
         data: &[Value],
         transformation: &str,
-        parameters: Option<&HashMap<String, Value>>,
+        params: &HashMap<String, Value>,
     ) -> Vec<Value> {
-        let empty_params = HashMap::new();
-        let params = parameters.unwrap_or(&empty_params);
-
         match transformation.to_lowercase().as_str() {
             "normalize" => self.normalize(data, params),
             "aggregate" => self.aggregate(data, params),
             "filter" => self.filter(data, params),
             "transform" => self.transform(data, params),
             "sort" => self.sort(data, params),
-            "deduplicate" => self.deduplicate(data, params),
+            "deduplicate" => self.deduplicate(data),
             _ => data.to_vec(),
         }
     }
@@ -173,7 +170,7 @@ impl CSharpBridge {
         out
     }
 
-    fn deduplicate(&self, data: &[Value], _params: &HashMap<String, Value>) -> Vec<Value> {
+    fn deduplicate(&self, data: &[Value]) -> Vec<Value> {
         let mut seen = HashSet::new();
         let mut out = vec![];
 
