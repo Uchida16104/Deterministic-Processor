@@ -1,0 +1,14 @@
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/bin/Release/net7.0/linux-x64/DeterministicProcessor.deps.json
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/bin/Release/net7.0/linux-x64/DeterministicProcessor.runtimeconfig.json
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/bin/Release/net7.0/linux-x64/DeterministicProcessor.dll
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/bin/Release/net7.0/linux-x64/DeterministicProcessor.pdb
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/DeterministicProcessor.GeneratedMSBuildEditorConfig.editorconfig
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/DeterministicProcessor.AssemblyInfoInputs.cache
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/DeterministicProcessor.AssemblyInfo.cs
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/DeterministicProcessor.csproj.CoreCompileInputs.cache
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/DeterministicProcessor.sourcelink.json
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/DeterministicProcessor.dll
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/refint/DeterministicProcessor.dll
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/DeterministicProcessor.pdb
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/DeterministicProcessor.genruntimeconfig.cache
+/Users/hirotoshiuchida/Documents/GitHub/Deterministic-Processor/backend/csharp/obj/Release/net7.0/linux-x64/ref/DeterministicProcessor.dll

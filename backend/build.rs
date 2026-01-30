@@ -1,28 +1,46 @@
-use std::env;
-use std::path::PathBuf;
-use std::process::Command;
+use std::path::Path;
+use std::fs;
 
 fn main() {
-    let csharp_dir = PathBuf::from("csharp");
-    
+
     println!("cargo:rerun-if-changed=csharp/DataProcessor.cs");
     println!("cargo:rerun-if-changed=csharp/MathTransforms.cs");
     println!("cargo:rerun-if-changed=csharp/RuleEngine.cs");
-    
-    let output = Command::new("dotnet")
-        .args(&["publish", "-c", "Release", "-o", "../target/csharp"])
-        .current_dir(&csharp_dir)
-        .output()
-        .expect("Failed to compile C# code. Ensure .NET SDK is installed.");
-    
-    if !output.status.success() {
+
+    let processor_path = Path::new("bin/DeterministicProcessor");
+
+    if !processor_path.exists() {
         panic!(
-            "C# compilation failed:\nstdout: {}\nstderr: {}",
-            String::from_utf8_lossy(&output.stdout),
-            String::from_utf8_lossy(&output.stderr)
+            "\n[build.rs error]\n\
+            Required prebuilt C# processor not found.\n\n\
+            Expected path:\n\
+              backend/bin/DeterministicProcessor\n\n\
+            Please build the C# project on macOS with:\n\
+              dotnet publish -c Release -r linux-x64 \\\n\
+              --self-contained true \\\n\
+              -p:PublishSingleFile=true \\\n\
+              -o backend/bin\n"
         );
     }
-    
-    let out_dir = env::var("OUT_DIR").unwrap();
-    println!("cargo:rustc-link-search=native={}", out_dir);
+
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+
+        let metadata = fs::metadata(processor_path)
+            .expect("Failed to read metadata of DeterministicProcessor");
+
+        let permissions = metadata.permissions();
+        let mode = permissions.mode();
+
+        if mode & 0o111 == 0 {
+            panic!(
+                "\n[build.rs error]\n\
+                DeterministicProcessor exists but is not executable.\n\n\
+                Please fix with:\n\
+                  chmod +x backend/bin/DeterministicProcessor\n"
+            );
+        }
+    }
+
 }
